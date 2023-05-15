@@ -1,6 +1,5 @@
 package com.example.volunteer_book_client.data.network
 
-import com.example.volunteer_book_client.UserProfile
 import com.example.volunteer_book_client.data.Event
 import com.example.volunteer_book_client.data.EventDetail
 import com.example.volunteer_book_client.data.User

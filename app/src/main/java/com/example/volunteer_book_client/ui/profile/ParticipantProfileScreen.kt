@@ -22,15 +22,12 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.example.volunteer_book_client.data.User
 import com.example.volunteer_book_client.ui.components.Characteristics
-import com.example.volunteer_book_client.ui.components.DoubleButtons
 import com.example.volunteer_book_client.ui.components.EventsList
 import com.example.volunteer_book_client.ui.components.PointsBarForVolunteer
 
 @Composable
-fun UserProfileScreen(
+fun ParticipantProfileScreen(
     user: User?,
-    onDecline: (userId: Int) -> Unit = {},
-    onAccept: (userId: Int) -> Unit = {},
     onEventClick: (Int) -> Unit = {}
 ) {
     Column(
@@ -86,21 +83,6 @@ fun UserProfileScreen(
                 )
 
             }
-
-            DoubleButtons(
-                state = true,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(56.dp),
-                leftButtonContent = {
-                    Text(text = "Отказать", textAlign = TextAlign.Center)
-                },
-                rightButtonContent = {
-                    Text(text = "Принять", textAlign = TextAlign.Center)
-                },
-                onLeftButtonClick = { onDecline(user.id) },
-                onRightButtonClick = { onAccept(user.id) }
-            )
         }
     }
 }

@@ -44,7 +44,8 @@ fun EventEditScreen(
     declineRequest: (eventId: Int, userId: Int) -> Unit = { _, _ -> },
     deleteParticipant: (eventId: Int, userId: Int) -> Unit = { _, _ -> },
     updatePoints: (eventId: Int, userId: Int, points: Int?) -> Unit = { _, _, _ -> },
-    onRequestClick: (userId: Int) -> Unit = {}
+    onRequestClick: (userId: Int) -> Unit = {},
+    onParticipantClick: (userId: Int) -> Unit = {}
 ) {
     Column(
         modifier = Modifier
@@ -111,7 +112,12 @@ fun EventEditScreen(
 
         Column(modifier = Modifier.fillMaxWidth()) {
             eventEditDTO.participants.forEach {
-                Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = CenterVertically) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clickable { onParticipantClick(it.id) },
+                    verticalAlignment = CenterVertically
+                ) {
                     Text(text = "${it.name} ${it.surname}", modifier = Modifier.weight(1f))
 
                     Row {

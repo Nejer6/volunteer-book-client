@@ -24,8 +24,9 @@ import com.example.volunteer_book_client.ui.events.CreateEventScreen
 import com.example.volunteer_book_client.ui.events.EventDetailRoute
 import com.example.volunteer_book_client.ui.events.EventEditScreen
 import com.example.volunteer_book_client.ui.events.EventsRoute
+import com.example.volunteer_book_client.ui.profile.ParticipantProfileScreen
 import com.example.volunteer_book_client.ui.profile.ProfileScreen
-import com.example.volunteer_book_client.ui.profile.UserProfileScreen
+import com.example.volunteer_book_client.ui.profile.RequestProfileScreen
 import com.example.volunteer_book_client.ui.theme.VolunteerbookclientTheme
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -191,15 +192,23 @@ fun VolunteerNavHost(
                     coroutineScope.launch(Dispatchers.IO) {
                         viewModel.getUserProfile(it)
                         coroutineScope.launch(Dispatchers.Main) {
-                            navController.navigateSingleTopTo(UserProfile.route)
+                            navController.navigateSingleTopTo(RequestUserProfile.route)
+                        }
+                    }
+                },
+                onParticipantClick = {
+                    coroutineScope.launch(Dispatchers.IO) {
+                        viewModel.getUserProfile(it)
+                        coroutineScope.launch(Dispatchers.Main) {
+                            navController.navigateSingleTopTo(ParticipantUserProfile.route)
                         }
                     }
                 }
             )
         }
 
-        composable(route = UserProfile.route) {
-            UserProfileScreen(
+        composable(route = RequestUserProfile.route) {
+            RequestProfileScreen(
                 user = viewModel.userProfile,
                 onDecline = {
                     coroutineScope.launch(Dispatchers.IO) {
@@ -217,6 +226,20 @@ fun VolunteerNavHost(
                         }
                     }
                 },
+                onEventClick = {
+                    coroutineScope.launch(Dispatchers.IO) {
+                        viewModel.getEventDetailById(it)
+                        coroutineScope.launch(Dispatchers.Main) {
+                            navController.navigateSingleTopTo(EventDetail.route)
+                        }
+                    }
+                }
+            )
+        }
+
+        composable(route = ParticipantUserProfile.route) {
+            ParticipantProfileScreen(
+                user = viewModel.userProfile,
                 onEventClick = {
                     coroutineScope.launch(Dispatchers.IO) {
                         viewModel.getEventDetailById(it)
