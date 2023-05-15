@@ -30,3 +30,7 @@ object CreateEvent : VolunteerDestination {
 object EventDetail : VolunteerDestination {
     override val route = "event-detail"
 }
+
+object EventEdit : VolunteerDestination {
+    override val route = "event-edit"
+}

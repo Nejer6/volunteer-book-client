@@ -22,7 +22,8 @@ import com.example.volunteer_book_client.data.repository.UserRepository
 import com.example.volunteer_book_client.ui.authorization.AuthorizationScreen
 import com.example.volunteer_book_client.ui.events.CreateEventScreen
 import com.example.volunteer_book_client.ui.events.EventDetailRoute
-import com.example.volunteer_book_client.ui.events.EventsScreen
+import com.example.volunteer_book_client.ui.events.EventEditScreen
+import com.example.volunteer_book_client.ui.events.EventsRoute
 import com.example.volunteer_book_client.ui.profile.ProfileScreen
 import com.example.volunteer_book_client.ui.theme.VolunteerbookclientTheme
 import kotlinx.coroutines.Dispatchers
@@ -108,8 +109,8 @@ fun VolunteerNavHost(
         }
 
         composable(route = Events.route) {
-            EventsScreen(
-                events = viewModel.events,
+            EventsRoute(
+                viewModel = viewModel,
                 onProfileClick = {
                     navController.navigateSingleTopTo(Profile.route)
                 },
@@ -118,6 +119,17 @@ fun VolunteerNavHost(
                         viewModel.getEventDetailById(it)
                         coroutineScope.launch(Dispatchers.Main) {
                             navController.navigateSingleTopTo(EventDetail.route)
+                        }
+                    }
+                },
+                onAddClick = {
+                    navController.navigateSingleTopTo(CreateEvent.route)
+                },
+                onEditClick = {
+                    coroutineScope.launch(Dispatchers.IO) {
+                        viewModel.getEventEdit(it)
+                        coroutineScope.launch(Dispatchers.Main) {
+                            navController.navigateSingleTopTo(EventEdit.route)
                         }
                     }
                 }
@@ -136,7 +148,45 @@ fun VolunteerNavHost(
         }
 
         composable(route = CreateEvent.route) {
-            CreateEventScreen()
+            CreateEventScreen(
+                onUndo = {
+                    navController.popBackStack()
+                },
+                onSend = {
+                    coroutineScope.launch(Dispatchers.IO) {
+                        viewModel.createEvent(it)
+                        coroutineScope.launch(Dispatchers.Main) {
+                            navController.popBackStack()
+                        }
+                    }
+                }
+            )
+        }
+        
+        composable(route = EventEdit.route) {
+            EventEditScreen(
+                eventEditDTO = viewModel.currentEventEdit!!,
+                acceptRequest = { eventId, userId ->
+                    coroutineScope.launch(Dispatchers.IO) {
+                        viewModel.acceptRequest(eventId, userId)
+                    }
+                },
+                declineRequest = { eventId, userId ->
+                    coroutineScope.launch(Dispatchers.IO) {
+                        viewModel.declineRequest(eventId, userId)
+                    }
+                },
+                deleteParticipant = { eventId, userId ->
+                    coroutineScope.launch(Dispatchers.IO) {
+                        viewModel.deleteParticipant(eventId, userId)
+                    }
+                },
+                updatePoints = { eventId, userId, points ->
+                    coroutineScope.launch(Dispatchers.IO) {
+                        viewModel.updatePoints(eventId, userId, points)
+                    }
+                }
+            )
         }
     }
 }
