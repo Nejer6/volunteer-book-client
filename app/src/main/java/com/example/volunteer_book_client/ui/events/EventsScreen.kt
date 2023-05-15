@@ -22,20 +22,25 @@ import com.example.volunteer_book_client.ui.components.EventsList
 fun EventsScreen(
     events: List<Event>,
     onProfileClick: () -> Unit = {},
-    onEventClick: (Int) -> Unit = {}
+    onEventClick: (Int) -> Unit = {},
+    content: @Composable () -> Unit = {}
 ) {
     Column(modifier = Modifier.fillMaxSize()) {
-        EventsList(
-            events = events,
-            modifier = Modifier
-                .fillMaxWidth()
-                .verticalScroll(
-                    rememberScrollState()
-                )
-                .padding(19.dp)
-                .weight(1f),
-            onEventClick = onEventClick
-        )
+        Column(modifier = Modifier
+            .fillMaxWidth()
+            .verticalScroll(rememberScrollState())
+            .padding(19.dp)
+            .weight(1f)
+        ) {
+            content()
+
+            EventsList(
+                events = events,
+                modifier = Modifier
+                    .fillMaxWidth(),
+                onEventClick = onEventClick
+            )
+        }
 
         DoubleButtons(
             state = false,

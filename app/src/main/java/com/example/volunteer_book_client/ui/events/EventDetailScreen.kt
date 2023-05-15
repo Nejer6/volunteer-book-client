@@ -1,6 +1,5 @@
 package com.example.volunteer_book_client.ui.events
 
-import android.util.Log
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -79,6 +78,8 @@ fun EventDetailScreen(
                 "Accepted" -> text = "Ваша заявка принята"
 
                 "Declined" -> text = "Извините, но вы не можете участвовать в этом мероприятии("
+
+                "Created" -> text = "Создано"
             }
 
             Box(
