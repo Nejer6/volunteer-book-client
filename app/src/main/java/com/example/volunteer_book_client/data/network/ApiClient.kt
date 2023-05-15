@@ -1,5 +1,6 @@
 package com.example.volunteer_book_client.data.network
 
+import com.example.volunteer_book_client.UserProfile
 import com.example.volunteer_book_client.data.Event
 import com.example.volunteer_book_client.data.EventDetail
 import com.example.volunteer_book_client.data.User
@@ -123,5 +124,9 @@ class ApiClient(private val baseUrl: String) {
 
     suspend fun deleteParticipant(eventId: Int, userId: Int) {
         client.delete("$baseUrl/api/protected/admin/events/$eventId/edit/participants/$userId")
+    }
+
+    suspend fun getUserProfile(userId: Int) : User {
+        return client.get("$baseUrl/api/protected/admin/users/$userId").body()
     }
 }

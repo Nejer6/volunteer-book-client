@@ -18,6 +18,7 @@ class VolunteerViewModel(
     private val eventRepository: EventRepository
 ) : ViewModel() {
     var profile: User? = null
+    var userProfile: User? = null
     var currentEventDetail by mutableStateOf<EventDetail?>(null)
     var currentEventEdit by mutableStateOf<EventEditDTO?>(null)
     var events: List<Event> = listOf()
@@ -88,6 +89,10 @@ class VolunteerViewModel(
                 participants = currentEventEdit?.participants?.filter { it.id != userId }
                     ?: listOf()
             )
+    }
+
+    suspend fun getUserProfile(userId: Int) {
+        userProfile = userRepository.getUserProfile(userId = userId)
     }
 
     suspend fun checkUser(email: String, password: String): Boolean {

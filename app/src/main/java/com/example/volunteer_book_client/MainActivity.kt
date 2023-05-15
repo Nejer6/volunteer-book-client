@@ -25,6 +25,7 @@ import com.example.volunteer_book_client.ui.events.EventDetailRoute
 import com.example.volunteer_book_client.ui.events.EventEditScreen
 import com.example.volunteer_book_client.ui.events.EventsRoute
 import com.example.volunteer_book_client.ui.profile.ProfileScreen
+import com.example.volunteer_book_client.ui.profile.UserProfileScreen
 import com.example.volunteer_book_client.ui.theme.VolunteerbookclientTheme
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -184,6 +185,44 @@ fun VolunteerNavHost(
                 updatePoints = { eventId, userId, points ->
                     coroutineScope.launch(Dispatchers.IO) {
                         viewModel.updatePoints(eventId, userId, points)
+                    }
+                },
+                onRequestClick = {
+                    coroutineScope.launch(Dispatchers.IO) {
+                        viewModel.getUserProfile(it)
+                        coroutineScope.launch(Dispatchers.Main) {
+                            navController.navigateSingleTopTo(UserProfile.route)
+                        }
+                    }
+                }
+            )
+        }
+
+        composable(route = UserProfile.route) {
+            UserProfileScreen(
+                user = viewModel.userProfile,
+                onDecline = {
+                    coroutineScope.launch(Dispatchers.IO) {
+                        viewModel.declineRequest(viewModel.currentEventEdit!!.id, it)
+                        coroutineScope.launch(Dispatchers.Main) {
+                            navController.popBackStack()
+                        }
+                    }
+                },
+                onAccept = {
+                    coroutineScope.launch(Dispatchers.IO) {
+                        viewModel.acceptRequest(viewModel.currentEventEdit!!.id, it)
+                        coroutineScope.launch(Dispatchers.Main) {
+                            navController.popBackStack()
+                        }
+                    }
+                },
+                onEventClick = {
+                    coroutineScope.launch(Dispatchers.IO) {
+                        viewModel.getEventDetailById(it)
+                        coroutineScope.launch(Dispatchers.Main) {
+                            navController.navigateSingleTopTo(EventDetail.route)
+                        }
                     }
                 }
             )

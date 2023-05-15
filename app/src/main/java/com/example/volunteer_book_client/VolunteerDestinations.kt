@@ -34,3 +34,7 @@ object EventDetail : VolunteerDestination {
 object EventEdit : VolunteerDestination {
     override val route = "event-edit"
 }
+
+object UserProfile : VolunteerDestination {
+    override val route = "user-profile"
+}

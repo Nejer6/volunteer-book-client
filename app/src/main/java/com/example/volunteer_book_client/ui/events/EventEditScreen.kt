@@ -1,5 +1,6 @@
 package com.example.volunteer_book_client.ui.events
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -39,10 +40,11 @@ import kotlin.math.sin
 @Composable
 fun EventEditScreen(
     eventEditDTO: EventEditDTO,
-    acceptRequest: (eventId: Int, userId: Int) -> Unit = {_, _ -> },
-    declineRequest: (eventId: Int, userId: Int) -> Unit = {_, _ -> },
-    deleteParticipant: (eventId: Int, userId: Int) -> Unit = {_, _ ->},
-    updatePoints: (eventId: Int, userId: Int, points: Int?) -> Unit = {_, _, _ ->}
+    acceptRequest: (eventId: Int, userId: Int) -> Unit = { _, _ -> },
+    declineRequest: (eventId: Int, userId: Int) -> Unit = { _, _ -> },
+    deleteParticipant: (eventId: Int, userId: Int) -> Unit = { _, _ -> },
+    updatePoints: (eventId: Int, userId: Int, points: Int?) -> Unit = { _, _, _ -> },
+    onRequestClick: (userId: Int) -> Unit = {}
 ) {
     Column(
         modifier = Modifier
@@ -85,7 +87,12 @@ fun EventEditScreen(
 
         Column(modifier = Modifier.fillMaxWidth()) {
             eventEditDTO.requests.forEach {
-                Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = CenterVertically) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clickable { onRequestClick(it.id) },
+                    verticalAlignment = CenterVertically
+                ) {
                     Text(text = "${it.name} ${it.surname}", modifier = Modifier.weight(1f))
 
                     IconButton(onClick = { acceptRequest(eventEditDTO.id, it.id) }) {
@@ -99,11 +106,11 @@ fun EventEditScreen(
                 }
             }
         }
-        
+
         Text(text = "Участники", color = MaterialTheme.colors.primary)
-        
+
         Column(modifier = Modifier.fillMaxWidth()) {
-            eventEditDTO.participants.forEach { 
+            eventEditDTO.participants.forEach {
                 Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = CenterVertically) {
                     Text(text = "${it.name} ${it.surname}", modifier = Modifier.weight(1f))
 
@@ -112,7 +119,7 @@ fun EventEditScreen(
                             mutableStateOf(if (it.points == null) "" else it.points.toString())
                         }
 
-                        OutlinedTextField(value = points, onValueChange = {str ->
+                        OutlinedTextField(value = points, onValueChange = { str ->
                             updatePoints(eventEditDTO.id, it.id, str.toIntOrNull())
                             points = str
                         }, modifier = Modifier.width(64.dp), placeholder = {

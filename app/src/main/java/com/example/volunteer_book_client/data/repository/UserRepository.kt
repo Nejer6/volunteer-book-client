@@ -15,4 +15,8 @@ class UserRepository(private val apiClient: ApiClient) {
     suspend fun getSelfProfile(): User? {
         return apiClient.getProfile()
     }
+
+    suspend fun getUserProfile(userId: Int): User {
+        return apiClient.getUserProfile(userId = userId)
+    }
 }

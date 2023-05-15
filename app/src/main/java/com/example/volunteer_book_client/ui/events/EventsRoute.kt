@@ -32,9 +32,8 @@ fun EventsRoute(
 
                 AdminEventsList(
                     events = adminEvents,
-                    onEventClick = onEventClick,
-                    onAddClick = onAddClick,
-                    onEditClick = onEditClick
+                    onEditClick = onEditClick,
+                    onAddClick = onAddClick
                 )
             }
         },
