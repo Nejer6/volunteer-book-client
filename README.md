@@ -72,6 +72,8 @@
 
 ![image](https://github.com/Nejer6/volunteer-book-client/assets/94484058/fd448bed-e715-4af5-900d-cf384e9cb082)
 
+# Дизайн приложения
+https://www.figma.com/file/P6PbALjwZIQLRdtCiEWDKD/Untitled?type=design&node-id=0-1
 
 # Mobile application for volunteers
 
