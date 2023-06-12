@@ -56,6 +56,11 @@ fun EventDetailScreen(
                 "Дата:" to eventDetail.date,
                 "Направление:" to eventDetail.direction,
                 "Организатор:" to eventDetail.organizer,
+                "Максимум участников" to if (eventDetail.maxParticipant == null) {
+                    "∞"
+                } else {
+                    eventDetail.maxParticipant.toString()
+                },
                 "Описание:" to ""
             ), modifier = Modifier.fillMaxWidth(),
             spacerDp = 10.dp
@@ -80,6 +85,8 @@ fun EventDetailScreen(
                 "Declined" -> text = "Извините, но вы не можете участвовать в этом мероприятии("
 
                 "Created" -> text = "Создано"
+
+                "Occupied" -> text = "Все места заняты"
             }
 
             Box(

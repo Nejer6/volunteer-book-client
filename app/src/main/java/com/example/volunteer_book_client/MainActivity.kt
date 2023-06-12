@@ -32,7 +32,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
-    private val apiClient = ApiClient("http://192.168.0.112:8080")
+    private val apiClient = ApiClient("http://192.168.0.109:8080")
     private val userRepository = UserRepository(apiClient)
     private val eventRepository = EventRepository(apiClient)
     private val volunteerViewModel = VolunteerViewModel(userRepository, eventRepository)

@@ -49,6 +49,10 @@ fun CreateEventScreen(onSend: (EventCreateDTO) -> Unit = {}, onUndo: () -> Unit 
             mutableStateOf("")
         }
 
+        var maxParticipant by remember {
+            mutableStateOf("")
+        }
+
         Column(
             modifier = Modifier
                 .fillMaxWidth()
@@ -79,6 +83,10 @@ fun CreateEventScreen(onSend: (EventCreateDTO) -> Unit = {}, onUndo: () -> Unit 
             OutlinedTextField(value = organizer, onValueChange = {
                 organizer = it
             }, modifier = Modifier.fillMaxWidth())
+            Text(text = "Максимальное число участников(не обязательно):")
+            OutlinedTextField(value = maxParticipant, onValueChange = {
+                maxParticipant = it
+            }, modifier = Modifier.fillMaxWidth())
             Text(text = "Описание:")
             OutlinedTextField(
                 value = description, onValueChange = {
@@ -102,7 +110,8 @@ fun CreateEventScreen(onSend: (EventCreateDTO) -> Unit = {}, onUndo: () -> Unit 
                         date = date,
                         direction = direction,
                         description = description,
-                        organizer = organizer
+                        organizer = organizer,
+                        maxParticipant = maxParticipant.toIntOrNull()
                     )
                 )
             },

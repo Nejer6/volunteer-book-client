@@ -75,6 +75,11 @@ fun EventEditScreen(
                 "Дата:" to eventEditDTO.date,
                 "Направление:" to eventEditDTO.direction,
                 "Организатор:" to eventEditDTO.organizer,
+                "Максимум участников" to if (eventEditDTO.maxParticipant == null) {
+                    "∞"
+                } else {
+                    eventEditDTO.maxParticipant.toString()
+                },
                 "Описание:" to ""
             ), modifier = Modifier.fillMaxWidth(),
             spacerDp = 10.dp
