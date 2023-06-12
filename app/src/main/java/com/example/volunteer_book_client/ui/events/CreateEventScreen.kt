@@ -83,7 +83,7 @@ fun CreateEventScreen(onSend: (EventCreateDTO) -> Unit = {}, onUndo: () -> Unit 
             OutlinedTextField(value = organizer, onValueChange = {
                 organizer = it
             }, modifier = Modifier.fillMaxWidth())
-            Text(text = "Максимальное число участников(не обязательно):")
+            Text(text = "Максимальное число участников:")
             OutlinedTextField(value = maxParticipant, onValueChange = {
                 maxParticipant = it
             }, modifier = Modifier.fillMaxWidth())
